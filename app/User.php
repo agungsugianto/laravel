@@ -14,6 +14,10 @@ class User extends Authenticatable
     use Notifiable;
     public function borrow(Book $book)
     {
+        // cek apakah masih ada stok buku
+    if ($book->stock < 1) {
+        throw new BookException("Buku $book->title sedang tidak tersedia.");
+    }
     // cek apakah buku ini sedang dipinjam oleh user
     if($this->borrowLogs()->where('book_id',$book->id)->where('is_returned', 0)->count() > 0 ) {
         throw new BookException("Buku $book->title sedang Anda pinjam.");
@@ -21,6 +25,7 @@ class User extends Authenticatable
     $borrowLog = BorrowLog::create(['user_id'=>$this->id, 'book_id'=>$book->id]);
     
     return $borrowLog;
+    
 }
 public function borrowLogs()
 {

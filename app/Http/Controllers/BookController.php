@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\BorrowLog;
 use Illuminate\Support\Facades\Auth;
 use App\Exceptions\BookException;
+use App\Requests\StoreBookRequest;
 class BookController extends Controller
 {
     public function returnBack($book_id)
@@ -145,7 +146,9 @@ class BookController extends Controller
         'title' => 'required|unique:books,title,' . $id, 'author_id' => 'required|exists:authors,id', 
         'amount' => 'required|numeric', 
         'cover' => 'image|max:2048' ]);
-        $book = Book::find($id); $book->update($request->all());
+        $book = Book::find($id); 
+        //$book->update($request->all());
+        if(!$book->update($request->all())) return redirect()->back();
         if ($request->hasFile('cover')) { 
             $filename = null; $uploaded_cover = $request->file('cover'); 
             $extension = $uploaded_cover->getClientOriginalExtension();
@@ -172,8 +175,13 @@ class BookController extends Controller
      * @param  \App\Book  $book
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id) { $book = Book::find($id);
-        if ($book->cover) { $old_cover = $book->cover; $filepath = public_path() . DIRECTORY_SEPARATOR . 'img' . DIRECTORY_SEPARATOR . $book->cover;
+    public function destroy($id) { 
+        $book = Book::find($id);
+        $cover = $book->cover;
+        if(!$book->delete()) return redirect()->back();
+        //if ($book->cover) { $old_cover = 
+            if ($cover) {
+            $book->cover; $filepath = public_path() . DIRECTORY_SEPARATOR . 'img' . DIRECTORY_SEPARATOR . $book->cover;
         try { File::delete($filepath); } catch (FileNotFoundException $e) {  
         }
         }
@@ -181,4 +189,5 @@ class BookController extends Controller
         Session::flash("flash_notification", [ "level"=>"success", "message"=>"Buku berhasil dihapus" ]);
         return redirect()->route('books.index');
         }
+        
         }
