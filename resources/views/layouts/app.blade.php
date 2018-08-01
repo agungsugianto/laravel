@@ -43,12 +43,15 @@
                             </li>
                             @role('admin')
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('authors.index') }}">Penulis</a>
-                            </li>
+                                <a class="nav-link" href="{{ route('authors.index') }}">Penulis</a></li>
                             <li class="nav-item">
-                            <a class="nav-link" href="{{ route('books.index') }}">Buku</a>
-                            </li>
+                            <a class="nav-link" href="{{ route('books.index') }}">Buku</a></li>
+                            <li>
+                            <a class="nav-link" href="{{ route('members.index') }}">Member</a></li>
                             @endrole
+                        @endif
+                        @if (auth()->check())
+                        <li><a class="nav-link" href="{{ url('/settings/profile') }}">Profil</a></li>
                         @endif
                     </ul>
 
@@ -74,6 +77,7 @@
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
+                                    <a class="nav-link" href="{{ url('/settings/password') }}"><i class="fa fa-btn fa-lock"></i> Ubah Password</a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
@@ -95,6 +99,7 @@
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
     @yield('scripts')
 </body>
 </html>

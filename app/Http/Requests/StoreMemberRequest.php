@@ -3,8 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
-class StoreBookRequest extends FormRequest
+
+class StoreMemberRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,8 +13,8 @@ class StoreBookRequest extends FormRequest
      */
     public function authorize()
     {
-        return Auth::check();
-        }
+        return true;
+    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -23,10 +23,9 @@ class StoreBookRequest extends FormRequest
      */
     public function rules()
     {
-        return [ 'title'=>'required|unique:books,title',
-                 'author_id'=>'required|exists:authors,id',
-                 'amount'=>'numeric',
-                 'cover'=>'image|max:2048'
+        return [
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255|unique:users',
         ];
     }
 }

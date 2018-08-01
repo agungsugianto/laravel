@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\BorrowLog;
 use Illuminate\Support\Facades\Auth;
 use App\Exceptions\BookException;
-use App\Requests\StoreBookRequest;
+use App\Http\Requests\StoreBookRequest;
 class BookController extends Controller
 {
     public function returnBack($book_id)
@@ -92,24 +92,20 @@ class BookController extends Controller
      * @return \Illuminate\Http\Response
      */
         //public function store(Request $request) 
-        public function store(StoreBookRequest $request ,$id)
+        public function store(StoreBookRequest $request)
         {
-            //$this->validate($request, 
-            //[ 'title' => 'required|unique:books,title', 
-            //'author_id' => 'required|exists:authors,id', 
-            //'amount' => 'required|numeric', 
-            //'cover' => 'image|max:2048' ]);
-            //$book = Book::create($request->except('cover'));
-            //if ($request->hasFile('cover')) { 
-            //$uploaded_cover = $request->file('cover');
-            //$extension = $uploaded_cover->getClientOriginalExtension();
-            //$filename = md5(time()) . '.' . $extension;
-            //$destinationPath = public_path() . DIRECTORY_SEPARATOR . 'img'; $uploaded_cover->move($destinationPath, $filename);
-            //$book->cover = $filename; $book->save();
-            //}
-            //Session::flash("flash_notification", 
-            //[ "level"=>"success", "message"=>"Berhasil menyimpan $book->title" ]);
-            //return redirect()->route('books.index');
+            
+            $book = Book::create($request->except('cover'));
+            if ($request->hasFile('cover')) { 
+            $uploaded_cover = $request->file('cover');
+            $extension = $uploaded_cover->getClientOriginalExtension();
+            $filename = md5(time()) . '.' . $extension;
+            $destinationPath = public_path() . DIRECTORY_SEPARATOR . 'img'; $uploaded_cover->move($destinationPath, $filename);
+            $book->cover = $filename; $book->save();
+            }
+            Session::flash("flash_notification", 
+            [ "level"=>"success", "message"=>"Berhasil menyimpan $book->title" ]);
+            return redirect()->route('books.index');
             }
 
     /**

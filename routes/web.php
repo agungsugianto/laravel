@@ -25,13 +25,23 @@ Route::group(['prefix'=>'admin','middleware'=>['auth', 'role:admin']], function 
     Route::resource('books', 'BookController');
 });
 Route::get('/', 'GuestController@index');
+
 Route::get('books/{book}/borrow',[
     'middleware'=>['auth', 'role:member'],
     'as'=>'guest.books.borrow',
     'uses'=>'BookController@borrow'
     ]);
-Route::put('books/{book}/return',[
+
+    Route::put('books/{book}/return',[
     'middleware'=>['auth', 'role:member'],
     'as'=>'member.books.return',
     'uses'=>'BookController@returnBack'
     ]);
+    Route::get('auth/verify/{token}', 'Auth\RegisterController@verify');
+    Route::get('auth/send-verification', 'Auth\RegisterController@sendVerification');
+    Route::get('settings/profile', 'SettingController@profile');
+    Route::get('settings/profile/edit', 'SettingController@editProfile');
+    Route::post('settings/profile', 'SettingController@updateProfile');
+    Route::get('settings/password', 'SettingController@editPassword');
+    Route::post('settings/password', 'SettingController@updatePassword');
+    Route::resource('members', 'MemberController');
