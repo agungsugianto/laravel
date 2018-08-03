@@ -10,11 +10,10 @@
                     <li class="breadcrumb-item active" aria-current="page">Penulis</li>
                 </ol>
             </nav>
-            <div class="card">
-                <div class="card-header">Data Penulis</div>
+                <div class="panel-body">Data Penulis</div>
                 <br>
-                <center><p> <a class="btn btn-primary" href="{{ route('authors.create') }}">Tambah</a> </p>
-                </center> <div class="card-body">
+                <p> <a class="btn btn-primary" href="{{ route('authors.create') }}">Tambah</a> </p>
+                 <div class="card-body">
                    {!! $html->table(['class'=>'table table-striped']) !!}
                 </div>
             </div>

@@ -48,6 +48,7 @@
                             <a class="nav-link" href="{{ route('books.index') }}">Buku</a></li>
                             <li>
                             <a class="nav-link" href="{{ route('members.index') }}">Member</a></li>
+                            <a class="nav-link" href="{{ route('statistics.index') }}">Peminjaman</a></li>
                             @endrole
                         @endif
                         @if (auth()->check())
@@ -77,7 +78,7 @@
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
-                                    <a class="nav-link" href="{{ url('/settings/password') }}"><i class="fa fa-btn fa-lock"></i> Ubah Password</a>
+                                    <a class="dropdown-item" href="{{ url('/settings/password') }}">Ubah Password</a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf

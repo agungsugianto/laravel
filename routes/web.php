@@ -23,6 +23,27 @@ Route::group(['prefix'=>'admin','middleware'=>['auth', 'role:admin']], function 
     //isi route disini
     Route::resource('authors', 'AuthorController');
     Route::resource('books', 'BookController');
+    Route::resource('members', 'MemberController');
+    Route::get('statistic', [
+        'as'=>'statistics.index',
+        'uses'=>'StatisticsController@index'
+        ]);
+    Route::get('export/books', [
+        'as' => 'export.books',
+        'uses' => 'BookController@export'
+        ]);
+    Route::post('export/books', [
+        'as' => 'export.books.post',
+        'uses' => 'BookController@exportPost'
+        ]);
+    Route::get('template/books', [
+        'as' => 'template.books',
+        'uses' => 'BookController@generateExcelTemplate'
+        ]);
+    Route::post('import/books', [
+        'as' => 'import.books',
+        'uses' => 'BookController@importExcel'
+        ]);
 });
 Route::get('/', 'GuestController@index');
 
@@ -44,4 +65,3 @@ Route::get('books/{book}/borrow',[
     Route::post('settings/profile', 'SettingController@updateProfile');
     Route::get('settings/password', 'SettingController@editPassword');
     Route::post('settings/password', 'SettingController@updatePassword');
-    Route::resource('members', 'MemberController');
