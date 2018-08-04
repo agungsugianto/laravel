@@ -21,6 +21,10 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/jquery.dataTables.css') }}" rel="stylesheet">
     <link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/selectize.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/selectize.bootstrap3.css') }}" rel="stylesheet">
+    
+    
 </head>
 <body>
     <div id="app">
@@ -100,6 +104,9 @@
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('js/selectize.min.js') }}"></script>
+    <script src="{{ asset('js/custom.js') }}"></script>
+    
     <script src='https://www.google.com/recaptcha/api.js'></script>
     @yield('scripts')
 </body>
